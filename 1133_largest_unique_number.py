@@ -17,6 +17,7 @@
 # 1 <= nums.length <= 2000
 # 0 <= nums[i] <= 1000
 
+# my solution
 from collections import defaultdict
 
 
@@ -33,3 +34,24 @@ class Solution:
             return max(unique_nums)
         else:
             return -1
+
+
+# editorial solution; instead of creating a list of unique numbers, iterate over the dictionary, and for each unique number, see if it's larger than the current "result"
+# this ends up being slightly slower and using slightly more memory than my solution
+from collections import defaultdict
+
+
+class Solution:
+    def largestUniqueNumber2(self, nums: List[int]) -> int:
+        nums_count = defaultdict(int)
+
+        for num in nums:
+            nums_count[num] += 1
+
+        result = -1
+
+        for key, value in nums_count.items():
+            if value == 1:
+                result = max(result, key)
+
+        return result
