@@ -42,26 +42,16 @@ class Solution:
     def numOfMinutes(
         self, n: int, headID: int, manager: List[int], informTime: List[int]
     ) -> int:
-        # maximum possible path from root to leaf
-
-        # map nodes to leaves
         graph = defaultdict(list)
 
-        for i in range(n):
-            if i == headID:
-                continue
-            employee = i
-            boss = manager[i]
-            graph[boss].append(employee)
+        for emp, man in enumerate(manager):
+            graph[man].append(emp)
 
-        def dfs(node):
-            manager_time = informTime[node]
-            downtree_time = 0
-            for employee in graph[node]:
-                if employee not in seen:
-                    seen.add(employee)
-                    downtree_time = max(downtree_time, dfs(employee))
-            return manager_time + downtree_time
+        def dfs(man):
+            manager_time = informTime[man]
+            downstream_time = 0
+            for emp in graph[man]:
+                downstream_time = max(downstream_time, dfs(emp))
+            return manager_time + downstream_time
 
-        seen = set()
         return dfs(headID)
