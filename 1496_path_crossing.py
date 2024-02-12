@@ -19,28 +19,48 @@
 # path[i] is either 'N', 'S', 'E', or 'W'.
 
 
+# class Solution:
+#     def isPathCrossing(self, path: str) -> bool:
+#         seen = set()
+
+#         curr_x = 0
+#         curr_y = 0
+
+#         seen.add((curr_x, curr_y))
+
+#         for direction in path:
+#             if direction == "N":
+#                 curr_y += 1
+#             if direction == "S":
+#                 curr_y -= 1
+#             if direction == "E":
+#                 curr_x += 1
+#             if direction == "W":
+#                 curr_x -= 1
+
+#             if (curr_x, curr_y) in seen:
+#                 return True
+#             else:
+#                 seen.add((curr_x, curr_y))
+
+#         return False
+
+
 class Solution:
     def isPathCrossing(self, path: str) -> bool:
-        seen = set()
+        moves = {"N": (0, 1), "S": (0, -1), "E": (1, 0), "W": (-1, 0)}
 
-        curr_x = 0
-        curr_y = 0
+        seen = {(0, 0)}
 
-        seen.add((curr_x, curr_y))
+        x = 0
+        y = 0
 
-        for direction in path:
-            if direction == "N":
-                curr_y += 1
-            if direction == "S":
-                curr_y -= 1
-            if direction == "E":
-                curr_x += 1
-            if direction == "W":
-                curr_x -= 1
-
-            if (curr_x, curr_y) in seen:
+        for dir in path:
+            dx, dy = moves[dir]
+            x += dx
+            y += dy
+            if (x, y) in seen:
                 return True
-            else:
-                seen.add((curr_x, curr_y))
+            seen.add((x, y))
 
         return False
